@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/apus-run/sea/internal/user/adapter"
-	"github.com/apus-run/sea/internal/user/app"
+	"github.com/apus-run/sea/internal/user/application"
 	"github.com/apus-run/sea/internal/user/data"
 	"github.com/apus-run/sea/pkg/log"
 	"github.com/apus-run/sea/pkg/xgin"
@@ -17,7 +17,7 @@ type Module struct {
 // Configure setups all dependencies
 func (m *Module) Configure(logger log.Logger, db *data.Data, engine *gin.Engine) {
 	repository := data.NewUserRepository(db, logger)
-	useCase := app.NewUserUseCase(repository, logger)
+	useCase := application.NewUserUseCase(repository, logger)
 	controller := adapter.NewUserController(useCase, logger)
 	engine.POST("/register", controller.Register)
 	engine.POST("/login", xgin.Handle(controller.Login))

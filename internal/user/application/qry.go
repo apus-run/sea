@@ -1,7 +1,8 @@
-package app
+package application
 
 import (
 	"context"
+
 	"github.com/apus-run/sea/internal/user/domain"
 )
 

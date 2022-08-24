@@ -1,13 +1,13 @@
-package app
+package application
 
 import (
 	"context"
-	"github.com/apus-run/sea/internal/user/data"
-	"github.com/apus-run/sea/pkg/log"
 
 	"github.com/pkg/errors"
 
+	"github.com/apus-run/sea/internal/user/data"
 	"github.com/apus-run/sea/internal/user/domain"
+	"github.com/apus-run/sea/pkg/log"
 )
 
 var ErrRegistrationUseCaseUserAlreadyCreated = errors.New("registration.userAlreadyCreated")

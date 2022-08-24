@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-// AppConfig app conf
+// AppConfig application conf
 type AppConfig struct {
 	App struct {
 		Mode string
@@ -23,9 +23,9 @@ func TestConfig(t *testing.T) {
 }
 
 func testConfig(t *testing.T) {
-	mode := Get("app.mode")
+	mode := Get("application.mode")
 	t.Logf("mode: %s", mode)
-	mode2 := File("sea").Get("app.mode")
+	mode2 := File("sea").Get("application.mode")
 	t.Logf("mode2: %s", mode2)
 
 	addr := File("test").GetInt("http.addr")

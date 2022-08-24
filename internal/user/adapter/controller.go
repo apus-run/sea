@@ -6,25 +6,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 
-	"github.com/apus-run/sea/internal/user/app"
-	"github.com/apus-run/sea/pkg/ginx"
+	"github.com/apus-run/sea/internal/user/application"
 	"github.com/apus-run/sea/pkg/log"
+	"github.com/apus-run/sea/pkg/xgin"
 )
 
 type UserController struct {
-	app app.UserUseCase
+	user application.UserUseCase
 
 	log *log.Helper
 }
 
-func NewUserController(app app.UserUseCase, logger log.Logger) *UserController {
+func NewUserController(user application.UserUseCase, logger log.Logger) *UserController {
 	return &UserController{
-		app: app,
-		log: log.NewHelper(logger),
+		user: user,
+		log:  log.NewHelper(logger),
 	}
 }
 
-func (c *UserController) Login(ctx *ginx.Context) {
+func (c *UserController) Login(ctx *xgin.Context) {
 	var loginData UserRequest
 	err := ctx.Bind(&loginData)
 	if err != nil {
@@ -49,11 +49,11 @@ func (c *UserController) Register(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	result, err := c.app.Register(ctx, registerData.ToEntity(), registerData.Password)
+	result, err := c.user.Register(ctx, registerData.ToEntity(), registerData.Password)
 
 	// 对是否有记录进行判断, 根据业务需求, 可进行更多处理
 	if err != nil {
-		if errors.Is(err, app.ErrRegistrationUseCaseUserAlreadyCreated) {
+		if errors.Is(err, application.ErrRegistrationUseCaseUserAlreadyCreated) {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		} else {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

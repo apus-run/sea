@@ -14,7 +14,7 @@ type UserRequest struct {
 // UserResponse 返回数据结构
 type UserResponse struct {
 	Username string `json:"username"`
-	Token    string `json:"token"`
+	Token    string `json:"auth"`
 }
 
 func NewUser(user *domain.User) *UserRequest {
